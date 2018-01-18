@@ -1,37 +1,74 @@
 
-import java.util.Scanner;
-import javax.swing.JTextField;
+public class PA{
+     
+	static double t1;
+	static double t2;
+	static double t3;
+	static double razao;
+	
+	public static double isPA(String termo1, String termo2, String termo3){
+               try{
+                        double doubletermo1 = Double.parseDouble(termo1);
+                        double doubletermo2 = Double.parseDouble(termo2);
+                        double  doubletermo3 = Double.parseDouble(termo3);
 
 
-
-public class ProgressãoAritmetica extends javax.swing.JFrame{
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int A1,A2,A3,CNTermo,NTPedido,NTermo,Soma,Razao = 0,TFinal,NTFinal,TCentral;
-        String PA;
-        
-        A1 = sc.nextInt(); /*Número pedido de a1*/
-        A2 = sc.nextInt(); /*Número pedido de a2*/
-        A3 = sc.nextInt(); /*Número pedido de a3*/
-        NTermo = sc.nextInt();  /*Número pedido de um termo qualquer*/
-        TFinal = sc.nextInt(); /*Número pedido do termo final da soma*/
-        NTFinal = sc.nextInt(); /*Número pedido do ultimo termo da PA*/
-        
-        
-        if ((A2 - A1) == (A3 - A2)) {
-            PA = "É uma P.A.";
-            Razao = A2 - A1; 
+                    if((doubletermo2 - doubletermo1) == (doubletermo3 - doubletermo2)){	
+                            t1 = doubletermo1;
+                            t2 = doubletermo2;
+                            t3 = doubletermo3;
+                            razao = doubletermo2 - doubletermo1;
+                            return 1;
+                    }else{
+                            return 0;
+                    }
+                 }catch(NumberFormatException e){
+                   ResultBox.display("Erro", "Insira Um número");
+                   PAInterface.termo1.setText(" ");
+                   PAInterface.termo2.setText(" ");
+                   PAInterface.termo3.setText(" ");
+                   return -1;
+               }
             
-            CNTermo = A1 + ((NTermo -1) * Razao);
-            System.out.println(CNTermo);
-            NTPedido = ((TFinal - A1)/Razao) + 1;
-            Soma = ((A1 + TFinal) * NTPedido)/2;
-            
-            TCentral = CNTermo + A1;
+	}
+	
+	public static double getRazao(){
+		return razao;
+	}
+	
+	public static double getTermo(String Ntermo){
+            try{
+		return (t1  + (Double.parseDouble(Ntermo) -1) *razao);
+                   
+            }catch(NumberFormatException e){
+                   ResultBox.display("Erro", "Insira Um número");
+                   PAInterface.fieldTermo.setText(" ");
+                   return -1;
+                  
+            }
+    
+        }		
+	
+	public static double getSoma(String termoF){
+            try{
+               return (t1 + Double.parseDouble(termoF) * (((Double.parseDouble(termoF) - t1)/razao) + 1));
+            }catch(NumberFormatException e){
+                   ResultBox.display("Erro", "Insira Um número");
+                   PAInterface.fieldSoma.setText(" ");
+                   return -1;
+                  
+            }
         }
-        else {
-            PA = "Não é uma P.A.";
-        }  
-    }
+	
+	public static double getTermoCentral(String termoN){
+            try{
+		return (PA.getTermo(termoN) + t1);
+            }catch(NumberFormatException e){
+                   ResultBox.display("Erro", "Insira Um número");
+                   PAInterface.fieldTermoCentral.setText(" ");
+                   return -1;
+                  
+            }
+	}
 }
 
